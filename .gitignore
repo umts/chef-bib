@@ -1,2 +1,4 @@
 node.json
 .bundle
+.kitchen/
+.kitchen.local.yml

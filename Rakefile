@@ -26,3 +26,29 @@ namespace :bib do
     system('chef-solo -j node.json -c config/solo.rb')
   end
 end
+
+begin
+  require "kitchen/rake_tasks"
+  Kitchen::RakeTasks.new
+rescue LoadError
+  puts ">>>>> Kitchen gem not loaded, omitting tasks" unless ENV["CI"]
+end
+
+namespace :style do
+  begin
+    require 'rubocop/rake_task'
+    RuboCop::RakeTask.new(:ruby)
+  rescue
+    puts ">>>>> Rubocop gem, not loaded, omitting tasks" unless ENV['CI']
+  end
+
+  begin
+    require 'foodcritic'
+    FoodCritic::Rake::LintTask.new(:chef)
+  rescue
+    puts ">>>>> Foodcritic gem, not loaded, omitting tasks" unless ENV['CI']
+  end
+end
+
+desc 'Run all style checks'
+task style: %w(style:chef style:ruby)

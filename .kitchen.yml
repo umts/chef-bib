@@ -1,0 +1,18 @@
+---
+driver:
+  name: vagrant
+  synced_folders:
+    - [".", "/tmp/chef-bib", "create: true"]
+
+provisioner:
+  name: shell
+
+platforms:
+  - name: arch
+    driver:
+      box_url: 'http://cloud.terry.im/vagrant/archlinux-x86_64.box'
+
+suites:
+  - name: default
+    run_list:
+    attributes:
