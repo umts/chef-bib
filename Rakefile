@@ -34,21 +34,26 @@ rescue LoadError
   puts ">>>>> Kitchen gem not loaded, omitting tasks" unless ENV["CI"]
 end
 
+style_tasks = []
 namespace :style do
   begin
     require 'rubocop/rake_task'
     RuboCop::RakeTask.new(:ruby)
-  rescue
+    style_tasks << 'style:ruby'
+  rescue LoadError
     puts ">>>>> Rubocop gem, not loaded, omitting tasks" unless ENV['CI']
   end
 
   begin
     require 'foodcritic'
     FoodCritic::Rake::LintTask.new(:chef)
-  rescue
+    style_tasks << 'style:chef'
+  rescue LoadError
     puts ">>>>> Foodcritic gem, not loaded, omitting tasks" unless ENV['CI']
   end
 end
 
-desc 'Run all style checks'
-task style: %w(style:chef style:ruby)
+if style_tasks.any?
+  desc 'Run all style checks'
+  task style: style_tasks
+end
