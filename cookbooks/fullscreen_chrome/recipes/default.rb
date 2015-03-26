@@ -23,12 +23,12 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
-%w(chromium matchbox-window-manager ntp xorg-server
-   xorg-server-utils xorg-xinit).each do |pkg|
-     package pkg do
-       action :install
-     end
+packages = %w(chromium matchbox-window-manager ntp xorg-server xorg-server-utils xorg-xinit)
 
+packages.each do |pkg|
+  package pkg do
+    action :install
+  end
 end
 
 pacman_aur 'xwit' do
