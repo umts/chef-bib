@@ -12,9 +12,6 @@ override_attributes(
       passwordless: 'true'
     }
   },
-  pacman: {
-    build_user: 'nobody'
-  },
   fschrome: {
     user: 'transit'
   }
