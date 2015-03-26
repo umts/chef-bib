@@ -5,18 +5,18 @@ require 'json'
 CLEAN.include('node.json')
 
 namespace :bib do
-  desc "Build the json configuration file"
+  desc 'Build the json configuration file'
   file 'node.json', :role do |t, args|
-    out = {bib: @config, run_list: [ "role[#{args[:role]}]" ]}
+    out = { bib: @config, run_list: ["role[#{args[:role]}]"] }
 
     File.open(t.name, 'w') do |file|
-      file.write( out.to_json )
+      file.write(out.to_json)
     end
   end
 
-  desc "Install the Bus Info Board"
-  task :install, :role do |t, args|
-    @config = YAML::load(File.open(File.join(File.dirname(__FILE__), 'config', 'bib.yml')))
+  desc 'Install the Bus Info Board'
+  task :install, :role do |_, args|
+    @config = YAML.load(File.open(File.join(File.dirname(__FILE__), 'config', 'bib.yml')))
     default_role = @config.delete('default_role')
 
     args.with_defaults(role: default_role)
@@ -28,10 +28,10 @@ namespace :bib do
 end
 
 begin
-  require "kitchen/rake_tasks"
+  require 'kitchen/rake_tasks'
   Kitchen::RakeTasks.new
 rescue LoadError
-  puts ">>>>> Kitchen gem not loaded, omitting tasks" unless ENV["CI"]
+  puts '>>>>> Kitchen gem not loaded, omitting tasks' unless ENV['CI']
 end
 
 style_tasks = []
@@ -41,7 +41,7 @@ namespace :style do
     RuboCop::RakeTask.new(:ruby)
     style_tasks << 'style:ruby'
   rescue LoadError
-    puts ">>>>> Rubocop gem, not loaded, omitting tasks" unless ENV['CI']
+    puts '>>>>> Rubocop gem, not loaded, omitting tasks' unless ENV['CI']
   end
 
   begin
@@ -49,7 +49,7 @@ namespace :style do
     FoodCritic::Rake::LintTask.new(:chef)
     style_tasks << 'style:chef'
   rescue LoadError
-    puts ">>>>> Foodcritic gem, not loaded, omitting tasks" unless ENV['CI']
+    puts '>>>>> Foodcritic gem, not loaded, omitting tasks' unless ENV['CI']
   end
 end
 
