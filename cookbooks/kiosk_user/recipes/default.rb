@@ -1,0 +1,65 @@
+#
+# Cookbook Name:: kiosk_user
+# Recipe:: default
+#
+# Copyright 2015, UMass Transit Service
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+#
+user node['bib']['username'] do
+  action [:create, :manage]
+  group node['bib']['usernmae']
+  manage_home true
+  home "/home/#{node['bib']['username']}"
+end
+
+directory "/home/#{node['bib']['username']}" do
+  action :create
+  user node['bib']['username']
+  group node['bib']['username']
+end
+
+group 'sysadmin' do
+  action :create
+  members node['bib']['username']
+  append true
+end
+
+user 'root' do
+  action :lock
+end
+
+directory '/etc/systemd/system/getty@tty1.service.d' do
+  action :create
+end
+
+template 'autologin.conf' do
+  action :create
+  source 'autologin.conf.erb'
+  path '/etc/systemd/system/getty@tty1.service.d/autologin.conf'
+  variables username: node['bib']['username']
+end
+
+cookbook_file 'bash_profile' do
+  source 'bash_profile'
+  path "/home/#{node['bib']['username']}/.bash_profile"
+  user node['bib']['username']
+  mode '0644'
+end
