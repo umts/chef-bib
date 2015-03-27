@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: bib-config
+# Cookbook Name:: bib_config
 # Recipe:: default
 #
 # Copyright 2015, UMass Transit Service
