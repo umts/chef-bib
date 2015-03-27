@@ -25,7 +25,7 @@
 #
 require 'uri'
 
-query_params = node['bib'].to_hash.reject{ |_,v| v.nil? }
+query_params = node['bib'].to_hash.reject { |_, v| v.nil? }
 
 query_params.delete('username')
 
@@ -37,7 +37,7 @@ if query_params['routes'].to_s == 'all' || query_params['routes'].nil?
   query_params.delete('routes')
 end
 
-query_string = URI.escape(query_params.map{ |k,v| "#{k}=#{v}" }.join('&'))
+query_string = URI.escape(query_params.map { |k, v| "#{k}=#{v}" }.join('&'))
 
 node.normal['fschrome']['url'] = "http://umts.github.io/BusInfoBoard/?#{query_string}"
 
