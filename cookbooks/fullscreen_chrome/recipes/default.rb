@@ -44,17 +44,18 @@ if node['fschrome']['user']
     group node['fschrome']['user']
     mode '0755'
     variables url: node['fschrome']['url']
-    notifies :run, 'execute[restart_chrome]'
+    notifies :run, 'bash[restart_chrome]'
   end
 end
 
-execute 'restart_chrome' do
+bash 'restart_chrome' do
   action :nothing
-  command <<-EOS
+  code <<-EOS
     killall -TERM chromium
     killall -TERM matchbox-window-manager
     sleep 2
     killall -KILL chromium || true
     killall -KILL matchbox-window-manager || true
   EOS
+  only_if 'ps -a | grep chromium'
 end

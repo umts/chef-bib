@@ -55,6 +55,7 @@ template 'autologin.conf' do
   source 'autologin.conf.erb'
   path '/etc/systemd/system/getty@tty1.service.d/autologin.conf'
   variables username: node['bib']['username']
+  notifies :run, 'bash[relaunch_tty]'
 end
 
 cookbook_file 'bash_profile' do
@@ -62,4 +63,12 @@ cookbook_file 'bash_profile' do
   path "/home/#{node['bib']['username']}/.bash_profile"
   user node['bib']['username']
   mode '0644'
+end
+
+bash 'relaunch_tty' do
+  action :nothing
+  code <<-EOS
+    systemctl daemon-reload
+    systemctl reload-or-restart getty@tty1.service
+  EOS
 end
