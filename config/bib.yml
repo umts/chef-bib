@@ -1,2 +1,7 @@
 default_role: kiosk
-stop_ids: []
+stops: [73]
+routes: all
+excluded_trips:
+  - Bus Garage via Mass Ave
+  - Bus Garage via Compsci
+title: Bus Departures

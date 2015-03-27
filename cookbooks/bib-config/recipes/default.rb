@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: fullscreen_chrome
+# Cookbook Name:: bib-config
 # Recipe:: default
 #
 # Copyright 2015, UMass Transit Service
@@ -23,38 +23,25 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
-packages = %w(chromium matchbox-window-manager ntp xorg-server xorg-server-utils xorg-xinit)
+require 'uri'
 
-packages.each do |pkg|
-  package pkg do
-    action :install
-  end
+query_params = node['bib'].to_hash.reject{ |_,v| v.nil? }
+
+query_params.delete('username')
+
+query_params['stops'] = query_params['stops'].join('+')
+query_params['excluded_trips'] = query_params['excluded_trips'].join('+')
+query_params['sort'] = 'time' if query_params.delete('sort_by_time')
+
+if query_params['routes'].to_s == 'all' || query_params['routes'].nil?
+  query_params.delete('routes')
 end
 
-pacman_aur 'xwit' do
-  action [:build, :install]
-end
+query_string = URI.escape(query_params.map{ |k,v| "#{k}=#{v}" }.join('&'))
 
-if node['fschrome']['user']
-  template 'xinitrc' do
-    action :create
-    source 'xinitrc.erb'
-    path "/home/#{node['fschrome']['user']}/.xinitrc"
-    owner node['fschrome']['user']
-    group node['fschrome']['user']
-    mode '0755'
-    variables url: node['fschrome']['url']
-    notifies :run, 'execute[restart_chrome]'
-  end
-end
+node.normal['fschrome']['url'] = "http://umts.github.io/BusInfoBoard/?#{query_string}"
 
-execute 'restart_chrome' do
-  action :nothing
-  command <<-EOS
-    killall -TERM chromium
-    killall -TERM matchbox-window-manager
-    sleep 2
-    killall -KILL chromium || true
-    killall -KILL matchbox-window-manager || true
-  EOS
+log 'bib_address' do
+  message "set Chrome URL to: #{node['fschrome']['url']}"
+  level :info
 end

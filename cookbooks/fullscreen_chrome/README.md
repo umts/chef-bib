@@ -1,24 +1,15 @@
-fullscreen_chrome Cookbook
+Fullscreen Chrome Cookbook
 ==========================
-TODO: Enter the cookbook description here.
-
-e.g.
-This cookbook makes your favorite breakfast sandwich.
+This cookbook configures the packages required to run chrome(ium) in a
+fullscreen, digitial signage mode.  It also (optionally) configures a
+user to run said setup on login.
 
 Requirements
 ------------
-TODO: List your cookbook requirements. Be sure to include any requirements this cookbook has on platforms, libraries, other cookbooks, packages, operating systems, etc.
-
-e.g.
-#### packages
-- `toaster` - fullscreen_chrome needs toaster to brown your bagel.
+The 'pacman' cookbook (for AUR)
 
 Attributes
 ----------
-TODO: List your cookbook attributes here.
-
-e.g.
-#### fullscreen_chrome::default
 <table>
   <tr>
     <th>Key</th>
@@ -27,42 +18,25 @@ e.g.
     <th>Default</th>
   </tr>
   <tr>
-    <td><tt>['fullscreen_chrome']['bacon']</tt></td>
-    <td>Boolean</td>
-    <td>whether to include bacon</td>
-    <td><tt>true</tt></td>
+    <td><tt>['fschrome']['url']</tt></td>
+    <td>String</td>
+    <td>The url for Chrome to display</td>
+    <td><tt>'http://example.com/'</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['fschrome']['user']</tt></td>
+    <td>String</td>
+    <td>The user who will run chrome on login</td>
+    <td><tt>nil</tt></td>
   </tr>
 </table>
 
 Usage
 -----
-#### fullscreen_chrome::default
-TODO: Write usage instructions for each cookbook.
-
-e.g.
-Just include `fullscreen_chrome` in your node's `run_list`:
-
-```json
-{
-  "name":"my_node",
-  "run_list": [
-    "recipe[fullscreen_chrome]"
-  ]
-}
-```
-
-Contributing
-------------
-TODO: (optional) If this is a public cookbook, detail the process for contributing. If this is a private cookbook, remove this section.
-
-e.g.
-1. Fork the repository on Github
-2. Create a named feature branch (like `add_component_x`)
-3. Write your change
-4. Write tests for your change (if applicable)
-5. Run the tests, ensuring they all pass
-6. Submit a Pull Request using Github
+`node['fschrome']['user']` defaults to `nil`, so the default behaviour
+is to not set up any particular user with this configuration.  Specify a
+user in order to set this up.
 
 License and Authors
 -------------------
-Authors: TODO: List authors
+Authors: Matt Moretti
