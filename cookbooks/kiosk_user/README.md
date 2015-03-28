@@ -13,7 +13,7 @@ Attributes
     <th>Default</th>
   </tr>
   <tr>
-    <td><tt>['bib']['username']</tt></td>
+    <td><tt>['kiosk']['username']</tt></td>
     <td>String</td>
     <td>the username for the kiosk user</td>
     <td><tt>transit</tt></td>

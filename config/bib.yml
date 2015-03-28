@@ -1,5 +1,6 @@
 default_role: kiosk
-stops: [73]
+base_url: 'http://umts.github.io/BusInfoBoard'
+stops: [64]
 routes: all
 excluded_trips:
   - Bus Garage via Mass Ave

@@ -27,19 +27,19 @@ require 'uri'
 
 query_params = node['bib'].to_hash.reject { |_, v| v.nil? }
 
-query_params.delete('username')
+query_params.delete('base_url')
 
 query_params['stops'] = query_params['stops'].join('+')
 query_params['excluded_trips'] = query_params['excluded_trips'].join('+')
 query_params['sort'] = 'time' if query_params.delete('sort_by_time')
 
-if query_params['routes'].to_s == 'all' || query_params['routes'].nil?
+if query_params['routes'].to_s == 'all'
   query_params.delete('routes')
 end
 
 query_string = URI.escape(query_params.map { |k, v| "#{k}=#{v}" }.join('&'))
 
-node.normal['fschrome']['url'] = "http://umts.github.io/BusInfoBoard/?#{query_string}"
+node.normal['fschrome']['url'] = "#{node['bib']['base_url']}?#{query_string}"
 
 log 'bib_address' do
   message "set Chrome URL to: #{node['fschrome']['url']}"

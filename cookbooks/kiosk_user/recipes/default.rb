@@ -23,22 +23,22 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
-user node['bib']['username'] do
+user node['kiosk']['username'] do
   action [:create, :manage]
-  group node['bib']['usernmae']
+  group node['kiosk']['usernmae']
   manage_home true
-  home "/home/#{node['bib']['username']}"
+  home "/home/#{node['kiosk']['username']}"
 end
 
-directory "/home/#{node['bib']['username']}" do
+directory "/home/#{node['kiosk']['username']}" do
   action :create
-  user node['bib']['username']
-  group node['bib']['username']
+  user node['kiosk']['username']
+  group node['kiosk']['username']
 end
 
 group 'sysadmin' do
   action :create
-  members node['bib']['username']
+  members node['kiosk']['username']
   append true
 end
 
@@ -54,14 +54,14 @@ template 'autologin.conf' do
   action :create
   source 'autologin.conf.erb'
   path '/etc/systemd/system/getty@tty1.service.d/autologin.conf'
-  variables username: node['bib']['username']
+  variables username: node['kiosk']['username']
   notifies :run, 'bash[relaunch_tty]'
 end
 
 cookbook_file 'bash_profile' do
   source 'bash_profile'
-  path "/home/#{node['bib']['username']}/.bash_profile"
-  user node['bib']['username']
+  path "/home/#{node['kiosk']['username']}/.bash_profile"
+  user node['kiosk']['username']
   mode '0644'
 end
 

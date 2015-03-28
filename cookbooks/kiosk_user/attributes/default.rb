@@ -1,1 +1,1 @@
-default['bib']['username'] = 'transit'
+default['kiosk']['username'] = 'transit'

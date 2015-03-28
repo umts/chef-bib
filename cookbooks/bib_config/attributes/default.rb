@@ -1,3 +1,4 @@
+default['bib']['base_url'] = 'http://umts.github.io/BusInfoBoard'
 default['bib']['stops'] = [1]
 default['bib']['routes'] = :all
 default['bib']['excluded_trips'] = ['Bus Garage via Mass Ave', 'Bus Garage via Compsci']
