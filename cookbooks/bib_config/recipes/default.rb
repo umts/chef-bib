@@ -23,25 +23,12 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
-require 'uri'
+Chef::Recipe.send(:include, BIB::QueryString)
 
-query_params = node['bib'].to_hash.reject { |_, v| v.nil? }
-
-query_params.delete('base_url')
-
-query_params['stops'] = query_params['stops'].join('+')
-query_params['excluded_trips'] = query_params['excluded_trips'].join('+')
-query_params['sort'] = 'time' if query_params.delete('sort_by_time')
-
-if query_params['routes'].to_s == 'all'
-  query_params.delete('routes')
-end
-
-query_string = URI.escape(query_params.map { |k, v| "#{k}=#{v}" }.join('&'))
-
-node.normal['fschrome']['url'] = "#{node['bib']['base_url']}?#{query_string}"
+node.normal['fschrome']['url'] =
+  "#{node['bib']['base_url']}?#{ build_qs(node['bib'].to_hash) }"
 
 log 'bib_address' do
-  message "set Chrome URL to: #{node['fschrome']['url']}"
+  message "Set Chrome URL to: #{ node['fschrome']['url'] }"
   level :info
 end
