@@ -35,20 +35,21 @@ pacman_aur 'xwit' do
   action [:build, :install]
 end
 
-if node['fschrome']['user']
-  template 'xinitrc' do
-    action :create
-    source 'xinitrc.erb'
-    path "/home/#{node['fschrome']['user']}/.xinitrc"
-    owner node['fschrome']['user']
-    group node['fschrome']['user']
-    mode '0755'
-    variables(
-      url: node['fschrome']['url'],
-      options: node['fschrome']['options'].join(' ')
-    )
-    notifies :run, 'bash[restart_chrome]'
-  end
+template 'xinitrc' do
+  action :create
+  source 'xinitrc.erb'
+  path "/home/#{node['fschrome']['user']}/.xinitrc"
+  owner node['fschrome']['user']
+  group node['fschrome']['user']
+  mode '0755'
+
+  variables(
+    url: node['fschrome']['url'],
+    options: node['fschrome']['options'].join(' ')
+  )
+
+  notifies :run, 'bash[restart_chrome]'
+  only_if { node['fschrome']['user'] }
 end
 
 bash 'restart_chrome' do

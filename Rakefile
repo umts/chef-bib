@@ -43,7 +43,11 @@ namespace :style do
     style_tasks << 'style:ruby'
   end
   optional_gem_task('foodcritic') do
-    FoodCritic::Rake::LintTask.new(:chef)
+    FoodCritic::Rake::LintTask.new(:chef) do |fc|
+      fc.options = fc.options.merge(
+        cookbook_paths: Dir.glob(File.join('cookbooks' '*'))
+      )
+    end
     style_tasks << 'style:chef'
   end
 end
