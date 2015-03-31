@@ -12,6 +12,6 @@ while true; do
   
   xwit -root -warp $( cat /sys/module/*fb*/parameters/fbwidth ) $( cat /sys/module/*fb*/parameters/fbheight )
   
-  /usr/bin/chromium --app=<%= @url -%> &
+  /usr/bin/chromium --app='<%= @url -%>' <%= @options -%> &
   exec matchbox-window-manager -use_titlebar no -use_cursor no
 done;

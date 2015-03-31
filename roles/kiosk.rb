@@ -7,12 +7,6 @@ run_list 'recipe[pacman]',
          'recipe[fullscreen_chrome]'
 
 override_attributes(
-  authorization: {
-    sudo: {
-      users: ['vagrant'],
-      passwordless: 'true'
-    }
-  },
   fschrome: {
     user: 'transit'
   }

@@ -43,7 +43,10 @@ if node['fschrome']['user']
     owner node['fschrome']['user']
     group node['fschrome']['user']
     mode '0755'
-    variables url: node['fschrome']['url']
+    variables(
+      url: node['fschrome']['url'],
+      options: node['fschrome']['options'].join(' ')
+    )
     notifies :run, 'bash[restart_chrome]'
   end
 end

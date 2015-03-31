@@ -26,8 +26,14 @@ Attributes
   <tr>
     <td><tt>['fschrome']['user']</tt></td>
     <td>String</td>
-    <td>The user who will run chrome on login</td>
+    <td>The user who will run Chrome on login</td>
     <td><tt>nil</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['fschrome']['options']</tt></td>
+    <td>Array</td>
+    <td>Additional command-line flags to pass to Chrome</td>
+    <td><tt>[]</tt></td>
   </tr>
 </table>
 
