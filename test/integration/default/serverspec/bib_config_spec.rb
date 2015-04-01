@@ -25,7 +25,7 @@ describe 'bib_config::default' do
   end
 
   describe process('chromium') do
-    its(:args) { should match(/http:\/\/umts.github.io\/BusInfoBoard/) }
+    its(:args) { should match(%r{http://umts.github.io/BusInfoBoard/}) }
     its(:args) { should match(/remote-debugging-port/) }
   end
 end

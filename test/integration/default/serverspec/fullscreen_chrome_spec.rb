@@ -14,14 +14,14 @@ describe 'fullscreen_chrome::default' do
 
   describe process('matchbox-window-manager') do
     it { should be_running }
-    its(:user) { should eq "transit" }
+    its(:user) { should eq 'transit' }
     its(:args) { should match(/titlebar no/) }
     its(:args) { should match(/cursor no/) }
   end
 
   describe process('chromium') do
     it { should be_running }
-    its(:user) { should eq "transit" }
+    its(:user) { should eq 'transit' }
     its(:args) { should match(/app=/) }
   end
 end
