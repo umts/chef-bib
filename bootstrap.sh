@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 set -e
 pacman -S --needed git ruby base-devel --noconfirm
-gem install chef --no-ri --no-rdoc --no-user-install
+rm /etc/gemrc
+gem install chef --no-ri --no-rdoc
 
 cd /tmp/chef-bib
 rake clean

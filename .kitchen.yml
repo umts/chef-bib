@@ -15,5 +15,6 @@ platforms:
 
 suites:
   - name: default
-    run_list:
-    attributes:
+
+busser:
+  ruby_bindir: '/usr/bin'
