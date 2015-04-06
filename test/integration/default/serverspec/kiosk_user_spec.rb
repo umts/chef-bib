@@ -25,4 +25,14 @@ describe 'kiosk_user::default' do
     it { should be_mode '644' }
     its(:content) { should match(/startx/) }
   end
+
+  describe process('login') do
+    it { should be_running }
+    its(:args) { should match(/transit/) }
+  end
+
+  describe process('startx') do
+    it { should be_running }
+    its(:user) { should match(/transit/) }
+  end
 end
