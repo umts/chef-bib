@@ -15,14 +15,14 @@ describe 'bib_config::default' do
       fschrome_url = chef_run.node['fschrome']['url']
 
       expect(fschrome_url).to match(%r{http://umts.github.io/BusInfoBoard})
-      expect(fschrome_url).to match(/stops=1/)
-      expect(fschrome_url).not_to match(/routes=/)
-      expect(fschrome_url).to match(/excluded_trips=Bus%20Garage[^+]*\+Bus%20Garage/)
-      expect(fschrome_url).not_to match(/sort=time/)
-      expect(fschrome_url).to match(/interval=30/)
-      expect(fschrome_url).to match(/work_day_start=4/)
-      expect(fschrome_url).not_to match(/_animation=/)
-      expect(fschrome_url).to match(/title=Bus/)
+      .and match(/stops=1/)
+      .and match(/excluded_trips=Bus%20Garage[^+]*\+Bus%20Garage/)
+      .and match(/interval=30/)
+      .and match(/work_day_start=4/)
+      .and match(/title=Bus/)
+      expect(fschrome_url).to_not match(/routes=/)
+      expect(fschrome_url).to_not match(/sort=time/)
+      expect(fschrome_url).to_not match(/_animation=/)
     end
   end
 end
