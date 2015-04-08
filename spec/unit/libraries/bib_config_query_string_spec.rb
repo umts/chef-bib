@@ -31,7 +31,7 @@ describe BIB::QueryString do
     end
 
     it 'joins array values with plusses' do
-      params = { 'stops' => [1,2,3], 'excluded_trips' => %w(some_trip some_other_trip) }
+      params = { 'stops' => [1, 2, 3], 'excluded_trips' => %w(some_trip some_other_trip) }
       expect(dummy_obj.build_qs(params).split('&').count).to eq(2)
       expect(dummy_obj.build_qs(params)).to match(/stops=1\+2\+3/)
       expect(dummy_obj.build_qs(params)).to match(/excluded_trips=some_trip\+some/)
@@ -44,12 +44,12 @@ describe BIB::QueryString do
 
     it 'handles route `all`' do
       params = { 'routes' => 'all' }
-      expect(dummy_obj.build_qs(params)).to eq('')
+      expect(dummy_obj.build_qs(params)).to be_empty
     end
 
     it 'handles route :all' do
       params = { 'routes' => :all }
-      expect(dummy_obj.build_qs(params)).to eq('')
+      expect(dummy_obj.build_qs(params)).to be_empty
     end
   end
 end

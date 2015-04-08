@@ -12,9 +12,13 @@ describe 'kiosk_user::default' do
     end
 
     it 'creates an admin user and home directory' do
-      expect(chef_run).to create_user('transit').with(group: 'transit', home: '/home/transit')
+      expect(chef_run).to create_user('transit')
+        .with(group: 'transit', home: '/home/transit')
+
       expect(chef_run).to create_directory('/home/transit')
-      expect(chef_run).to create_group('sysadmin').with(members: ['transit'])
+
+      expect(chef_run).to create_group('sysadmin')
+        .with(members: ['transit'])
     end
 
     it 'has the kiosk user start X' do

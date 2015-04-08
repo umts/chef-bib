@@ -5,27 +5,27 @@ require 'json'
 
 describe 'bib_config::default' do
   describe 'open Chromium tabs' do
-    def debug_json
-      @json_response ||= JSON.parse(Net::HTTP.get(URI.parse('http://localhost:9753/json/list')))
+    let(:debug_json) do
+      JSON.parse(Net::HTTP.get(URI.parse('http://localhost:9753/json/list')))
     end
 
-    def page_uri
+    let(:page_uri) do
       URI.parse(debug_json.first['url'])
     end
 
     it 'has only one' do
-      debug_json.size.should eq 1
+      expect(debug_json.size).to eq(1)
     end
 
     it 'is the bus info board' do
-      debug_json.first['title'].should eq 'Bus Info Board'
-      page_uri.host.should eq 'umts.github.io'
-      page_uri.path.should eq '/BusInfoBoard/'
+      expect(debug_json.first['title']).to eq('Bus Info Board')
+      expect(page_uri.host).to eq('umts.github.io')
+      expect(page_uri.path).to eq('/BusInfoBoard/')
     end
   end
 
   describe process('chromium') do
-    its(:args) { should match(%r{http://umts.github.io/BusInfoBoard}) }
-    its(:args) { should match(/remote-debugging-port/) }
+    its(:args) { are_expected.to match(%r{http://umts.github.io/BusInfoBoard}) }
+    its(:args) { are_expected.to match(/remote-debugging-port/) }
   end
 end
