@@ -25,7 +25,6 @@
 #
 user node['kiosk']['username'] do
   action [:create, :manage]
-  group node['kiosk']['username']
   manage_home true
   home "/home/#{node['kiosk']['username']}"
 end
@@ -33,7 +32,6 @@ end
 directory "/home/#{node['kiosk']['username']}" do
   action :create
   user node['kiosk']['username']
-  group node['kiosk']['username']
 end
 
 group 'sysadmin' do

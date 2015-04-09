@@ -13,7 +13,7 @@ describe 'kiosk_user::default' do
 
     it 'creates an admin user and home directory' do
       expect(chef_run).to create_user('transit')
-        .with(group: 'transit', home: '/home/transit')
+        .with(home: '/home/transit')
 
       expect(chef_run).to create_directory('/home/transit')
 
