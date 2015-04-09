@@ -11,3 +11,5 @@ RSpec.configure do |config|
   # Specify the path for Chef Solo to find roles (default: [ascending search])
   config.role_path = 'roles'
 end
+
+at_exit { ChefSpec::Coverage.report! }
