@@ -1,7 +1,6 @@
 ---
 driver:
   name: vagrant
-  gui: true
   synced_folders:
     - [".", "/tmp/chef-bib", "create: true"]
 
