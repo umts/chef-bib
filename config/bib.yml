@@ -1,8 +1,9 @@
 default_role: kiosk
-base_url: 'http://umts.github.io/BusInfoBoard'
-stops: [64]
-routes: all
-excluded_trips:
-  - Bus Garage via Mass Ave
-  - Bus Garage via Compsci
-title: Bus Departures
+bib:
+  base_url: 'http://umts.github.io/BusInfoBoard'
+  stops: [64]
+  routes: all
+  excluded_trips:
+    - Bus Garage via Mass Ave
+    - Bus Garage via Compsci
+  title: Bus Departures

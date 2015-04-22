@@ -11,7 +11,7 @@ namespace :bib do
     config = YAML.load(File.open(config_file))
     args.with_defaults(role: config.delete('default_role'))
 
-    out = { bib: config, run_list: ["role[#{args[:role]}]"] }
+    out = config.merge({ run_list: ["role[#{args[:role]}]"] })
 
     File.open(t.name, 'w') do |file|
       file.write(out.to_json)
