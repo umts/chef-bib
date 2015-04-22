@@ -37,7 +37,12 @@ describe 'kiosk_user::default' do
         .with_content(/autologin transit/)
     end
 
-    it 'relaunches the tty' do
+    it 'does not always restart the tty' do
+      relaunch_script = chef_run.bash('relaunch_tty')
+      expect(relaunch_script).to do_nothing
+    end
+
+    it 'relaunches the tty when notified' do
       resource = chef_run.template('autologin.conf')
       expect(resource).to notify('bash[relaunch_tty]').to(:run)
     end

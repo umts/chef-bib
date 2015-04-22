@@ -24,5 +24,13 @@ describe 'bib_config::default' do
       expect(fschrome_url).to_not match(/sort=time/)
       expect(fschrome_url).to_not match(/_animation=/)
     end
+
+    it 'logs the fschrome url' do
+      expect(chef_run).to write_log('bib_address')
+
+      log = chef_run.log('bib_address')
+      expect(log.message).to match(/Chrome URL/)
+      expect([:info, :warn, :error, :fatal]).to include(log.level)
+    end
   end
 end

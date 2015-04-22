@@ -12,9 +12,10 @@ describe 'fullscreen_chrome::default' do
     end
 
     it 'installs various packages' do
-      %w(chromium matchbox-window-manager xorg-server).each do |pkg|
-        expect(chef_run).to install_package(pkg)
-      end
+      %w(chromium matchbox-window-manager ntp xorg-server xorg-server-utils xorg-xinit)
+        .each do |pkg|
+          expect(chef_run).to install_package(pkg)
+        end
     end
 
     it 'installs xwit from aur' do
@@ -43,7 +44,12 @@ describe 'fullscreen_chrome::default' do
         .with_content(%r{http://example.com})
     end
 
-    it 'relaunches Chromium' do
+    it 'does not always relaunce Chromium' do
+      restart_script = chef_run.bash('restart_chrome')
+      expect(restart_script).to do_nothing
+    end
+
+    it 'relaunches Chromium if notified' do
       xinit_template = chef_run.template('xinitrc')
       expect(xinit_template).to notify('bash[restart_chrome]').to(:run)
     end
