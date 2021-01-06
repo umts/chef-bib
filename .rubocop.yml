@@ -9,5 +9,5 @@ Encoding:
   Enabled: false
 LineLength:
   Enabled: false
-Style/SingleSpaceBeforeFirstArg:
+Layout/SingleSpaceBeforeFirstArg:
   Enabled: false

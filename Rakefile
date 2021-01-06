@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rake/clean'
 require 'yaml'
 require 'json'
@@ -8,7 +10,7 @@ config_file = File.join(File.dirname(__FILE__), 'config', 'bib.yml')
 namespace :bib do
   desc 'Build the json configuration file'
   file 'node.json', [:role] => [config_file] do |t, args|
-    config = YAML.load(File.open(config_file))
+    config = YAML.safe_load(File.open(config_file))
     args.with_defaults(role: config.delete('default_role'))
 
     out = config.merge(run_list: ["role[#{args[:role]}]"])
@@ -19,8 +21,10 @@ namespace :bib do
   end
 
   desc 'Install the Bus Info Board'
-  task :install, [:role] => ['node.json'] do
-    system('chef-solo -j node.json -c config/solo.rb')
+  task :install, [:role] => ['node.json'] do |t, args|
+    command = 'chef-solo -N chef-bib -j node.json -c config/solo.rb'
+    command += ' -N chef-bib-tk --chef-license accept' if args[:role] == 'test'
+    system(command)
   end
 end
 
@@ -45,7 +49,7 @@ namespace :style do
   optional_gem_task('foodcritic') do
     FoodCritic::Rake::LintTask.new(:chef) do |fc|
       fc.options = fc.options.merge(
-        cookbook_paths: Dir.glob(File.join('cookbooks' '*'))
+        cookbook_paths: Dir.glob(File.join('cookbooks', '*'))
       )
     end
     style_tasks << 'style:chef'

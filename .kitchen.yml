@@ -10,7 +10,7 @@ provisioner:
 platforms:
   - name: arch
     driver:
-      box_url: 'http://cloud.terry.im/vagrant/archlinux-x86_64.box'
+      box: 'archlinux/archlinux'
 
 suites:
   - name: default

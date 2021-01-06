@@ -1,4 +1,10 @@
 node.json
+nodes/
+
 .bundle
+
 .kitchen/
 .kitchen.local.yml
+
+config/chef_guid
+config/local-mode-cache
