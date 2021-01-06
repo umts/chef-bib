@@ -4,10 +4,3 @@ AllCops:
   Exclude:
     - .kitchen/**/*
     - vendor-cookbooks/**/*
-
-Encoding:
-  Enabled: false
-LineLength:
-  Enabled: false
-Layout/SingleSpaceBeforeFirstArg:
-  Enabled: false

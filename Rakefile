@@ -21,7 +21,7 @@ namespace :bib do
   end
 
   desc 'Install the Bus Info Board'
-  task :install, [:role] => ['node.json'] do |t, args|
+  task :install, [:role] => ['node.json'] do |_, args|
     command = 'chef-solo -N chef-bib -j node.json -c config/solo.rb'
     command += ' -N chef-bib-tk --chef-license accept' if args[:role] == 'test'
     system(command)
