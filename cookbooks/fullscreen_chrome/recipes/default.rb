@@ -23,16 +23,11 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
-packages = %w(chromium matchbox-window-manager ntp xorg-server xorg-server-utils xorg-xinit)
-
+packages = %w[chromium ntp ratpoison xorg-server xorg-xset xorg-xinit]
 packages.each do |pkg|
   package pkg do
     action :install
   end
-end
-
-pacman_aur 'xwit' do
-  action [:build, :install]
 end
 
 template 'xinitrc' do
@@ -56,10 +51,10 @@ bash 'restart_chrome' do
   action :nothing
   code <<-EOS
     killall -TERM chromium
-    killall -TERM matchbox-window-manager
+    killall -TERM ratpoison
     sleep 2
     killall -KILL chromium || true
-    killall -KILL matchbox-window-manager || true
+    killall -KILL ratpoison || true
   EOS
   only_if 'ps -a | grep chromium'
 end
