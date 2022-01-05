@@ -7,4 +7,5 @@ nodes/
 .kitchen.local.yml
 
 config/chef_guid
+config/cinc_guid
 config/local-mode-cache
