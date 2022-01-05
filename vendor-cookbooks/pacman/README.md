@@ -1,4 +1,6 @@
-[![Travis CI](https://travis-ci.org/jesseadams/pacman.png)](https://travis-ci.org/jesseadams/pacman)
+![CircleCI](https://img.shields.io/circleci/build/github/limitusus/pacman/main?token=87934db5bbb1c75e92ba0a2bf7e313d06bbbdce0)
+![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/limitusus/pacman)
+![Chef cookbook](https://img.shields.io/cookbook/v/pacman)
 
 DESCRIPTION
 ===========
@@ -9,14 +11,6 @@ REQUIREMENTS
 ============
 
 Platform: ArchLinux. Pacman is not relevant on other platforms.
-
-ATTRIBUTES
-==========
-
-| Attribute                    | Default                                   | Description                                             |
-|------------------------------|-------------------------------------------|---------------------------------------------------------|
-| `node[:pacman][:build_dir]`  | `#{Chef:Config[:file_cache_path]}/builds` | The default directory where AUR packages will be built. |
-| `node[:pacman][:build_user]` | `nobody`                                    | The user that will build AUR packages.                  |
 
 RESOURCES
 =========
@@ -35,17 +29,16 @@ Use the `pacman_aur` resource to install packages from ArchLinux's AUR repositor
 
 ### Actions:
 
-* :build - Builds the package.
-* :install - Installs the built package.
+* `:build` - Builds the package.
+* `:install` - Installs the built package.
 
 ### Parameters:
 
-* version - hardcode a version
-* builddir - specify an alternate build directory, defaults to `node[:pacman][:build_dir]`.
-* options - pass arbitrary options to the pacman command.
+* `version` - hardcode a version
+* `builddir` - specify an alternate build directory, defaults to `Chef::Config[:file_cache_path]/builds`.
+* `options` - pass arbitrary options to the pacman command.
 * `pkgbuild_src` - whether to use an included PKGBUILD file, put the PKGBUILD file in in the `files/default` directory.
-* patches - array of patch names, as files in `files/default` that should be applied for the package.
-* skippgpcheck - optional, pass the `--skippgpcheck` flag to `makepkg`
+* `patches` - array of patch names, as files in `files/default` that should be applied for the package.
 
 http://aur.archlinux.org/
 
@@ -58,10 +51,12 @@ Include `recipe[pacman]` early in the run list, preferably first, to ensure that
 LICENSE AND AUTHOR
 ==================
 
-Author:: Joshua Timberman (<joshua@opscode.com>)
+Author:: Tomoya Kabe (<limit.usus@gmail.com>)
+Former Author:: Joshua Timberman (<joshua@opscode.com>)
 
-Maintainer:: Jesse R. Adams (jesse <at> techno <dash> geeks <dot> org)
+Maintainer:: Tomoya Kabe (<limit.usus@gmail.com>)
 
+Copyright:: Tomoya Kabe (<limit.usus@gmail.com>)
 Copyright:: Opscode, Inc. (<legal@opscode.com>)
 
 Licensed under the Apache License, Version 2.0 (the "License");
