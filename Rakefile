@@ -24,7 +24,7 @@ namespace :bib do
   task :install, [:role] => ['node.json'] do |_, args|
     command = 'chef-solo -N chef-bib -j node.json -c config/solo.rb'
     command += ' -N chef-bib-tk --chef-license accept' if args[:role] == 'test'
-    system(command)
+    system(command, exception: true)
   end
 end
 
