@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
 #
-# Cookbook Name:: kiosk_user
+# Cookbook:: kiosk_user
 # Recipe:: default
-#
-# Copyright 2015, UMass Transit Service
+# Copyright:: 2015 UMass Transit Service
 #
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files (the

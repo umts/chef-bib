@@ -10,10 +10,11 @@ module BIB
     # Take in a hash of values (probably `node['bib'].to_hash`) and
     # return a formatted query string
     def build_qs(params)
-      params.dup.tap { |p| special_case_keys(p) }
-            .tap     { |p| delete_keys(p) }
-            .tap     { |p| escape_keys(p) }
-            .then    { |p| stringify(p) }
+      params.dup.compact
+            .tap  { |p| special_case_keys(p) }
+            .tap  { |p| delete_keys(p) }
+            .tap  { |p| escape_keys(p) }
+            .then { |p| stringify(p) }
     end
 
     def delete_keys(hash)
@@ -28,7 +29,7 @@ module BIB
     end
 
     def special_case_keys(hash)
-      hash.delete('routes') if hash['routes'] == 'all'
+      hash.delete('routes') if hash['routes'].to_s == 'all'
       hash['sort'] = 'time' if hash['sort_by_time']
     end
 

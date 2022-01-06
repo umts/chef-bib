@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
 #
-# Cookbook Name:: bib_config
+# Cookbook:: bib_config
 # Recipe:: default
-#
-# Copyright 2015, UMass Transit Service
+# Copyright:: 2015 UMass Transit Service
 #
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files (the
@@ -27,7 +26,7 @@
 #
 Chef::Recipe.include BIB::QueryString
 
-node.normal['fschrome']['url'] =
+node.default['fschrome']['url'] =
   "#{node['bib']['base_url']}?#{build_qs(node['bib'].to_hash)}"
 
 log 'bib_address' do

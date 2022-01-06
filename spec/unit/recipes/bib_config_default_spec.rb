@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 describe 'bib_config::default' do
-  context 'When all attributes are default, on an unspecified platform' do
+  context 'When all attributes are default, on archlinux' do
     let(:chef_run) do
-      runner = ChefSpec::SoloRunner.new
+      runner = ChefSpec::SoloRunner.new platform: 'arch', version: '4.10.13-1-ARCH'
       runner.converge(described_recipe)
     end
 

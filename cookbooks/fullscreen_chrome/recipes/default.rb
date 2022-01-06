@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
 #
-# Cookbook Name:: fullscreen_chrome
+# Cookbook:: fullscreen_chrome
 # Recipe:: default
-#
-# Copyright 2015, UMass Transit Service
+# Copyright::  2015 UMass Transit Service
 #
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files (the
@@ -46,7 +45,7 @@ template 'xinitrc' do
   )
 
   notifies :run, 'bash[restart_chrome]'
-  only_if { node['fschrome']['user'] }
+  not_if { node['fschrome']['user'].to_s.empty? }
 end
 
 bash 'restart_chrome' do

@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 describe 'fullscreen_chrome::default' do
-  context 'When all attributes are default, on an unspecified platform' do
+  context 'When all attributes are default, on archlinux' do
     let(:chef_run) do
-      runner = ChefSpec::SoloRunner.new
+      runner = ChefSpec::SoloRunner.new platform: 'arch', version: '4.10.13-1-ARCH'
       runner.converge(described_recipe)
     end
 
@@ -12,15 +12,10 @@ describe 'fullscreen_chrome::default' do
     end
 
     it 'installs various packages' do
-      %w(chromium matchbox-window-manager ntp xorg-server xorg-server-utils xorg-xinit)
+      %w(chromium ratpoison ntp xorg-server xorg-xset xorg-xinit)
         .each do |pkg|
           expect(chef_run).to install_package(pkg)
         end
-    end
-
-    it 'installs xwit from aur' do
-      expect(chef_run).to build_pacman_aur('xwit')
-      expect(chef_run).to install_pacman_aur('xwit')
     end
 
     it 'does not make an xinitrc' do
@@ -29,10 +24,10 @@ describe 'fullscreen_chrome::default' do
     end
   end
 
-  context 'With a specified fschrome user, on an unspecified platform' do
+  context 'With a specified fschrome user, on archlinux' do
     let(:chef_run) do
-      runner = ChefSpec::SoloRunner.new do |node|
-        node.set['fschrome']['user'] = 'someguy'
+      runner = ChefSpec::SoloRunner.new platform: 'arch', version: '4.10.13-1-ARCH' do |node|
+        node.normal['fschrome']['user'] = 'someguy'
       end
       runner.converge(described_recipe)
     end
@@ -40,7 +35,7 @@ describe 'fullscreen_chrome::default' do
     it 'creates an xinitrc' do
       expect(chef_run).to render_file('/home/someguy/.xinitrc')
         .with_content(/chromium --app/)
-        .with_content(/exec matchbox-window-manager/)
+        .with_content(/exec ratpoison/)
         .with_content(%r{http://example.com})
     end
 

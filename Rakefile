@@ -46,11 +46,9 @@ namespace :style do
     RuboCop::RakeTask.new(:ruby)
     style_tasks << 'style:ruby'
   end
-  optional_gem_task('foodcritic') do
-    FoodCritic::Rake::LintTask.new(:chef) do |fc|
-      fc.options = fc.options.merge(
-        cookbook_paths: Dir.glob(File.join('cookbooks', '*'))
-      )
+  optional_gem_task('cookstyle') do
+    RuboCop::RakeTask.new(:chef) do |task|
+      task.options << '--display-cop-names'
     end
     style_tasks << 'style:chef'
   end
