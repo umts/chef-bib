@@ -67,8 +67,8 @@ end
 
 bash 'relaunch_tty' do
   action :nothing
-  code <<-EOS
+  code <<-BASH
     systemctl daemon-reload
     systemctl reload-or-restart getty@tty1.service
-  EOS
+  BASH
 end

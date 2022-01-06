@@ -6,27 +6,34 @@ module BIB
   # Bus Info Board cookbook query-string helpers.
   module QueryString
     extend self
+
     # Take in a hash of values (probably `node['bib'].to_hash`) and
     # return a formatted query string
     def build_qs(params)
-      qp = {}
-      params.each do |key, value|
-        case key
-        # Delete these keys
-        when 'base_url'
-        # These keys are arrays, join w/+
-        when 'stops', 'excluded_trips'
-          qp[key] = escape_array(value)
-        when 'sort_by_time'
-          qp['sort'] = 'time' if value
-        when 'routes'
-          qp[key] = escape_array(value) unless value.to_s == 'all'
-        else
-          qp[key] = escape(value) unless value.nil?
-        end
-      end
+      params.dup.tap { |p| special_case_keys(p) }
+            .tap     { |p| delete_keys(p) }
+            .tap     { |p| escape_keys(p) }
+            .then    { |p| stringify(p) }
+    end
 
-      qp.map { |k, v| "#{k}=#{v}" }.join('&')
+    def delete_keys(hash)
+      %w[base_url sort_by_time].each { |key| hash.delete(key) }
+      hash
+    end
+
+    def escape_keys(hash)
+      hash.transform_values! do |value|
+        value.is_a?(Array) ? escape_array(value) : escape(value)
+      end
+    end
+
+    def special_case_keys(hash)
+      hash.delete('routes') if hash['routes'] == 'all'
+      hash['sort'] = 'time' if hash['sort_by_time']
+    end
+
+    def stringify(hash)
+      hash.map { |k, v| "#{k}=#{v}" }.join('&')
     end
 
     def escape(value)

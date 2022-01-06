@@ -51,12 +51,12 @@ end
 
 bash 'restart_chrome' do
   action :nothing
-  code <<-EOS
+  code <<-BASH
     killall -TERM chromium
     killall -TERM ratpoison
     sleep 2
     killall -KILL chromium || true
     killall -KILL ratpoison || true
-  EOS
+  BASH
   only_if 'ps -a | grep chromium'
 end
