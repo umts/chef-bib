@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 name             'kiosk_user'
 maintainer       'UMass Transit Service'
 maintainer_email 'transit-it@admin.umass.edu'

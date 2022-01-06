@@ -1,6 +1,7 @@
 AllCops:
   Include:
     - Rakefile
-  Exclude:
-    - .kitchen/**/*
-    - vendor-cookbooks/**/*
+    - cookbooks/**/*.rb
+
+Style/ModuleFunction:
+  Enabled: false

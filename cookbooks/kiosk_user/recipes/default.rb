@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #
 # Cookbook Name:: kiosk_user
 # Recipe:: default
@@ -24,7 +26,7 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 user node['kiosk']['username'] do
-  action [:create, :manage]
+  action %i[create manage]
   manage_home true
   home "/home/#{node['kiosk']['username']}"
 end

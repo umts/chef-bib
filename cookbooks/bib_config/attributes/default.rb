@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 default['bib']['base_url'] = 'http://umts.github.io/BusInfoBoard'
 default['bib']['stops'] = [1]
 default['bib']['routes'] = :all

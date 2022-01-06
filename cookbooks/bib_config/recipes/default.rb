@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #
 # Cookbook Name:: bib_config
 # Recipe:: default
@@ -23,12 +25,12 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
-Chef::Recipe.send(:include, BIB::QueryString)
+Chef::Recipe.include BIB::QueryString
 
 node.normal['fschrome']['url'] =
-  "#{node['bib']['base_url']}?#{ build_qs(node['bib'].to_hash) }"
+  "#{node['bib']['base_url']}?#{build_qs(node['bib'].to_hash)}"
 
 log 'bib_address' do
-  message "Set Chrome URL to: #{ node['fschrome']['url'] }"
+  message "Set Chrome URL to: #{node['fschrome']['url']}"
   level :info
 end
